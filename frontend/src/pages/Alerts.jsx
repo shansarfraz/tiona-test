@@ -78,23 +78,23 @@ const Alerts = () => {
   if (error) return <ErrorDisplay message={error} />
 
   return (
-    <div>
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+    <div className="w-full max-w-full overflow-x-hidden">
+      <div className="flex flex-col gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <h1 className="text-3xl font-bold">🔔 Alerts</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold">🔔 Alerts</h1>
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span>Live</span>
+            <span className="hidden sm:inline">Live</span>
           </div>
         </div>
 
         {/* Severity Summary */}
-        <div className="flex gap-2 text-sm">
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
           {severities.slice(1).map(severity => {
             const config = getSeverityConfig(severity)
             const count = groupedAlerts[severity]?.length || 0
             return (
-              <div key={severity} className={`px-3 py-1 rounded-lg ${config.bg} ${config.text} font-medium`}>
+              <div key={severity} className={`px-2 sm:px-3 py-1 rounded-lg ${config.bg} ${config.text} font-medium text-xs sm:text-sm whitespace-nowrap flex-shrink-0`}>
                 {config.icon} {count}
               </div>
             )
@@ -103,12 +103,12 @@ const Alerts = () => {
       </div>
 
       {/* Severity Filter */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
         {severities.map(severity => (
           <button
             key={severity}
             onClick={() => setSelectedSeverity(severity)}
-            className={`px-4 py-2 rounded-lg font-medium transition-all capitalize ${
+            className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-all capitalize whitespace-nowrap text-sm flex-shrink-0 ${
               selectedSeverity === severity
                 ? 'bg-blue-600 text-white shadow-md'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -131,23 +131,23 @@ const Alerts = () => {
 
             return (
               <div key={severity} className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className={`bg-gradient-to-r ${config.gradient} text-white px-6 py-4`}>
-                  <h2 className="text-xl font-bold flex items-center gap-2">
+                <div className={`bg-gradient-to-r ${config.gradient} text-white px-4 sm:px-6 py-3 sm:py-4`}>
+                  <h2 className="text-lg sm:text-xl font-bold flex items-center gap-2">
                     <span>{config.icon}</span>
                     <span className="capitalize">{severity} Severity</span>
-                    <span className="ml-auto text-sm opacity-90">({severityAlerts.length})</span>
+                    <span className="ml-auto text-xs sm:text-sm opacity-90">({severityAlerts.length})</span>
                   </h2>
                 </div>
-                <div className="p-4 space-y-3">
+                <div className="p-3 sm:p-4 space-y-3">
                   {severityAlerts.map((alert, index) => (
                     <div
                       key={index}
-                      className={`border-l-4 ${config.border} pl-4 py-3 hover:bg-gray-50 transition-colors rounded-r`}
+                      className={`border-l-4 ${config.border} pl-3 sm:pl-4 py-2 sm:py-3 hover:bg-gray-50 transition-colors rounded-r`}
                     >
-                      <div className="flex items-start justify-between mb-2">
-                        <p className="text-gray-900 font-medium flex-1">{alert.message}</p>
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                        <p className="text-sm sm:text-base text-gray-900 font-medium flex-1 break-words">{alert.message}</p>
                         {alert.impact && (
-                          <span className={`text-xs px-2 py-1 rounded ml-2 ${
+                          <span className={`text-xs px-2 py-1 rounded self-start ${
                             alert.impact === 'positive' ? 'bg-green-100 text-green-800' :
                             alert.impact === 'negative' ? 'bg-red-100 text-red-800' :
                             'bg-gray-100 text-gray-800'
@@ -156,12 +156,13 @@ const Alerts = () => {
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-gray-600">
+                      <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-gray-600">
                         <div className="flex items-center gap-1">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                           </svg>
-                          <span>{new Date(alert.timestamp).toLocaleString()}</span>
+                          <span className="hidden sm:inline">{new Date(alert.timestamp).toLocaleString()}</span>
+                          <span className="sm:hidden">{new Date(alert.timestamp).toLocaleDateString()}</span>
                         </div>
                         {alert.type && (
                           <span className="text-xs bg-gray-100 px-2 py-1 rounded">{alert.type}</span>
@@ -190,19 +191,20 @@ const Alerts = () => {
               return (
                 <div
                   key={index}
-                  className="bg-white p-5 rounded-lg shadow-lg hover:shadow-xl transition-all"
+                  className="bg-white p-4 sm:p-5 rounded-lg shadow-lg hover:shadow-xl transition-all"
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-start gap-3 flex-1">
-                      <span className="text-2xl">{config.icon}</span>
-                      <div className="flex-1">
-                        <p className="text-gray-900 font-medium mb-1">{alert.message}</p>
-                        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                    <div className="flex items-start gap-3 flex-1 min-w-0">
+                      <span className="text-xl sm:text-2xl flex-shrink-0">{config.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm sm:text-base text-gray-900 font-medium mb-2 break-words">{alert.message}</p>
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-600">
                           <div className="flex items-center gap-1">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            <span>{new Date(alert.timestamp).toLocaleString()}</span>
+                            <span className="hidden sm:inline">{new Date(alert.timestamp).toLocaleString()}</span>
+                            <span className="sm:hidden">{new Date(alert.timestamp).toLocaleDateString()}</span>
                           </div>
                           {alert.type && (
                             <span className="text-xs bg-gray-100 px-2 py-1 rounded">{alert.type}</span>
@@ -210,12 +212,12 @@ const Alerts = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <span className={`px-3 py-1 text-xs font-medium rounded-full ${config.bg} ${config.text}`}>
+                    <div className="flex flex-row sm:flex-col items-center sm:items-end gap-2 self-start">
+                      <span className={`px-2 sm:px-3 py-1 text-xs font-medium rounded-full whitespace-nowrap ${config.bg} ${config.text}`}>
                         {alert.severity}
                       </span>
                       {alert.impact && (
-                        <span className={`text-xs px-2 py-1 rounded ${
+                        <span className={`text-xs px-2 py-1 rounded whitespace-nowrap ${
                           alert.impact === 'positive' ? 'bg-green-100 text-green-800' :
                           alert.impact === 'negative' ? 'bg-red-100 text-red-800' :
                           'bg-gray-100 text-gray-800'

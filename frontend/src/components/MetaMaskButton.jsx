@@ -91,7 +91,7 @@ const MetaMaskButton = () => {
     <button
       onClick={connectWallet}
       disabled={!isMetaMaskAvailable && typeof window !== 'undefined' && typeof window.ethereum === 'undefined'}
-      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+      className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors text-sm sm:text-base ${
         isConnected
           ? 'bg-green-100 text-green-800 border border-green-300'
           : isMetaMaskAvailable || (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined')
@@ -101,10 +101,14 @@ const MetaMaskButton = () => {
       title={!isMetaMaskAvailable && typeof window !== 'undefined' && typeof window.ethereum === 'undefined' ? 'MetaMask not installed' : ''}
     >
       {isConnected ? (
-        <span>🦊 {formatAddress(account)}</span>
+        <span className="flex items-center gap-1">
+          <span>🦊</span>
+          <span className="hidden sm:inline">{formatAddress(account)}</span>
+        </span>
       ) : (
-        <span>Connect MetaMask</span>
+        <span className="hidden sm:inline">Connect MetaMask</span>
       )}
+      {!isConnected && <span className="sm:hidden">🦊</span>}
     </button>
   )
 }

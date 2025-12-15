@@ -178,7 +178,7 @@ const Assets = () => {
   if (error) return <ErrorDisplay message={error} />
 
   return (
-    <div className="pb-4">
+    <div className="w-full max-w-full overflow-x-hidden pb-4">
       <div className="flex flex-col gap-4 mb-6">
         {/* Title and Live Indicator */}
         <div className="flex items-center gap-3">

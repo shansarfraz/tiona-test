@@ -76,7 +76,7 @@ const Portfolio = () => {
   }))
 
   return (
-    <div>
+    <div className="w-full max-w-full overflow-x-hidden">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <h1 className="text-3xl font-bold">💼 Portfolio</h1>
@@ -155,8 +155,8 @@ const Portfolio = () => {
         </div>
       </div>
 
-      {/* Asset Details Table */}
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+      {/* Asset Details Table - Desktop */}
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden hidden md:block">
         <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
           <h2 className="text-xl font-bold">Holdings</h2>
         </div>
@@ -240,6 +240,76 @@ const Portfolio = () => {
               </tr>
             </tfoot>
           </table>
+        </div>
+      </div>
+
+      {/* Asset Details Cards - Mobile */}
+      <div className="md:hidden space-y-3">
+        <h2 className="text-xl font-bold mb-4">Holdings</h2>
+        {portfolio.assets.map((asset, index) => (
+          <div key={index} className="bg-white rounded-lg shadow-lg p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
+                <span className="font-bold text-lg text-gray-900">{asset.assetId}</span>
+              </div>
+              <span className={`text-lg font-bold ${
+                asset.changePercent >= 0 ? 'text-green-600' : 'text-red-600'
+              }`}>
+                {asset.changePercent >= 0 ? '+' : ''}{asset.changePercent.toFixed(2)}%
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <p className="text-xs text-gray-600">Quantity</p>
+                <p className="font-semibold text-gray-900">{asset.quantity.toLocaleString()}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-600">Current Price</p>
+                <p className="font-semibold text-gray-900">${asset.currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-600">Avg Buy Price</p>
+                <p className="font-semibold text-gray-900">${asset.avgBuyPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-600">Total Value</p>
+                <p className="font-semibold text-gray-900">${asset.value.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+              </div>
+            </div>
+
+            <div className="mt-3 pt-3 border-t border-gray-200">
+              <div className="flex justify-between items-center">
+                <span className="text-xs text-gray-600">Change</span>
+                <span className={`font-semibold ${
+                  asset.change >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}>
+                  {asset.change >= 0 ? '+' : ''}${asset.change.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Mobile Total Summary */}
+        <div className="bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg shadow-lg p-4 text-white">
+          <p className="text-sm text-gray-300 mb-2">Portfolio Total</p>
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-2xl font-bold">${portfolio.totalValue.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+              <p className={`text-sm font-semibold mt-1 ${
+                portfolio.totalChange >= 0 ? 'text-green-400' : 'text-red-400'
+              }`}>
+                {portfolio.totalChange >= 0 ? '+' : ''}${portfolio.totalChange.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+              </p>
+            </div>
+            <p className={`text-xl font-bold ${
+              portfolio.totalChangePercent >= 0 ? 'text-green-400' : 'text-red-400'
+            }`}>
+              {portfolio.totalChangePercent >= 0 ? '+' : ''}{portfolio.totalChangePercent.toFixed(2)}%
+            </p>
+          </div>
         </div>
       </div>
 

@@ -67,12 +67,13 @@ const Dashboard = () => {
   if (error) return <ErrorDisplay message={error} />
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
+    <div className="w-full max-w-full overflow-x-hidden">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold">Dashboard</h1>
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span>Live Updates</span>
+          <span className="hidden sm:inline">Live Updates</span>
+          <span className="sm:hidden">Live</span>
         </div>
       </div>
 
