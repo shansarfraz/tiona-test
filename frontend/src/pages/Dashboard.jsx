@@ -78,20 +78,20 @@ const Dashboard = () => {
 
       {/* Portfolio Summary Card */}
       {portfolioData && (
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-lg shadow-lg mb-6 text-white">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+        <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 sm:p-6 rounded-lg shadow-lg mb-6 text-white">
+          <h2 className="text-lg sm:text-xl font-semibold mb-4 flex items-center gap-2">
             <span>💼</span> Portfolio Summary
           </h2>
-          <div className="flex items-center gap-4">
-            <div>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="w-full sm:w-auto">
               <p className="text-blue-100 text-sm">Total Portfolio Value</p>
-              <p className="text-4xl font-bold">${portfolioData.totalValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+              <p className="text-2xl sm:text-3xl md:text-4xl font-bold break-all">${portfolioData.totalValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
             </div>
-            <div className={`ml-auto text-right px-4 py-2 rounded-lg ${portfolioData.totalChange >= 0 ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
-              <p className="text-2xl font-bold">
+            <div className={`w-full sm:w-auto sm:ml-auto text-left sm:text-right px-4 py-2 rounded-lg ${portfolioData.totalChange >= 0 ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+              <p className="text-xl sm:text-2xl font-bold">
                 {portfolioData.totalChange >= 0 ? '↗' : '↘'} {portfolioData.totalChange >= 0 ? '+' : ''}${Math.abs(portfolioData.totalChange).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
-              <p className="text-lg">
+              <p className="text-base sm:text-lg">
                 {portfolioData.totalChangePercent >= 0 ? '+' : ''}{portfolioData.totalChangePercent.toFixed(2)}%
               </p>
             </div>
@@ -101,22 +101,22 @@ const Dashboard = () => {
 
       {/* Top Gainers & Losers Section */}
       {dashboardData && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6">
           {/* Top Gainers */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 flex items-center gap-2">
               <span>📈</span> Top Gainers
             </h2>
             <div className="space-y-3">
               {dashboardData.topGainers.map((asset, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
-                  <div>
-                    <p className="font-semibold text-gray-900">{asset.symbol}</p>
-                    <p className="text-sm text-gray-600">{asset.name}</p>
+                <div key={index} className="flex items-center justify-between p-2 sm:p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                  <div className="min-w-0 flex-1 mr-2">
+                    <p className="font-semibold text-gray-900 text-sm sm:text-base truncate">{asset.symbol}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 truncate">{asset.name}</p>
                   </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-gray-900">${asset.currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                    <p className="text-green-600 text-sm font-medium">+{asset.changePercent.toFixed(2)}%</p>
+                  <div className="text-right flex-shrink-0">
+                    <p className="font-semibold text-gray-900 text-sm sm:text-base">${asset.currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    <p className="text-green-600 text-xs sm:text-sm font-medium">+{asset.changePercent.toFixed(2)}%</p>
                   </div>
                 </div>
               ))}
@@ -124,20 +124,20 @@ const Dashboard = () => {
           </div>
 
           {/* Top Losers */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 flex items-center gap-2">
               <span>📉</span> Top Losers
             </h2>
             <div className="space-y-3">
               {dashboardData.topLosers.map((asset, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-red-50 rounded-lg hover:bg-red-100 transition-colors">
-                  <div>
-                    <p className="font-semibold text-gray-900">{asset.symbol}</p>
-                    <p className="text-sm text-gray-600">{asset.name}</p>
+                <div key={index} className="flex items-center justify-between p-2 sm:p-3 bg-red-50 rounded-lg hover:bg-red-100 transition-colors">
+                  <div className="min-w-0 flex-1 mr-2">
+                    <p className="font-semibold text-gray-900 text-sm sm:text-base truncate">{asset.symbol}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 truncate">{asset.name}</p>
                   </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-gray-900">${asset.currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                    <p className="text-red-600 text-sm font-medium">{asset.changePercent.toFixed(2)}%</p>
+                  <div className="text-right flex-shrink-0">
+                    <p className="font-semibold text-gray-900 text-sm sm:text-base">${asset.currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    <p className="text-red-600 text-xs sm:text-sm font-medium">{asset.changePercent.toFixed(2)}%</p>
                   </div>
                 </div>
               ))}
@@ -148,18 +148,18 @@ const Dashboard = () => {
 
       {/* Recent News Feed and Active Alerts */}
       {dashboardData && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Recent News Feed */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 flex items-center gap-2">
               <span>📰</span> Recent News
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {dashboardData.recentNews.map((news, index) => (
                 <div key={index} className="border-b border-gray-200 pb-3 last:border-b-0 hover:bg-gray-50 p-2 rounded transition-colors">
-                  <div className="flex items-start justify-between mb-1">
-                    <h3 className="font-semibold text-sm flex-1 text-gray-900">{news.title}</h3>
-                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded ml-2 whitespace-nowrap">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-1">
+                    <h3 className="font-semibold text-sm flex-1 text-gray-900 pr-2">{news.title}</h3>
+                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded whitespace-nowrap self-start">
                       {news.category}
                     </span>
                   </div>
@@ -173,8 +173,8 @@ const Dashboard = () => {
           </div>
 
           {/* Active Alerts Summary */}
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 flex items-center gap-2">
               <span>🔔</span> Active Alerts
             </h2>
             <div className="space-y-3">
@@ -189,9 +189,9 @@ const Dashboard = () => {
 
                 return (
                   <div key={index} className={`border-l-4 ${config.border} pl-3 py-2 hover:bg-gray-50 rounded transition-colors`}>
-                    <div className="flex items-start justify-between mb-1">
-                      <p className="text-sm flex-1 text-gray-900">{config.icon} {alert.message}</p>
-                      <span className={`text-xs px-2 py-1 rounded ml-2 whitespace-nowrap ${config.bg} ${config.text}`}>
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-1">
+                      <p className="text-xs sm:text-sm flex-1 text-gray-900 break-words">{config.icon} {alert.message}</p>
+                      <span className={`text-xs px-2 py-1 rounded whitespace-nowrap self-start ${config.bg} ${config.text}`}>
                         {alert.severity}
                       </span>
                     </div>
